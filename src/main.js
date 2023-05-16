@@ -1,5 +1,6 @@
 // js
 
+// display cat
 function displayCat(catId) {
     var img = document.createElement("img");
 
@@ -10,9 +11,9 @@ function displayCat(catId) {
     document.body.appendChild(img);
 }
 
-function fetchCats(quantity = 1) {
-    const requestURL = `https://cataas.com/api/cats?limit=${quantity}`;
-    debugger;
+// fetch cats, pending how to pass how many as a parameter
+function fetchCats(qtty = 4) {
+    const requestURL = `https://cataas.com/api/cats?limit=10`;
     const request = new Request(requestURL);
 
     const response = fetch(request);
@@ -27,7 +28,6 @@ function fetchCats(quantity = 1) {
         .catch((error) => console.log(error));
 }
 
-
-
+// main
 const myButton = document.getElementById('reload');
-myButton.addEventListener('click', fetchCats(5));
+myButton.addEventListener('click', () => fetchCats(10));
