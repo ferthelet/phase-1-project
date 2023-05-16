@@ -1,19 +1,45 @@
 // js
 
+
 // display cat
 function displayCat(catId) {
-    var img = document.createElement("img");
+    const catImgDiv = document.getElementById("catImg");
+    const catImg = document.createElement("img");
+    debugger;
+    catImg.src = `https://cataas.com/cat/${catId}`;
+    catImg.alt = `cute cat ${catId}`;
+    console.log(catImg);
+    catImgDiv.appendChild(catImg);
 
-    img.id = catId;
-    img.src = `https://cataas.com/cat/${catId}`;
-    img.classList.add("imageFeatures");
-    img.alt = `cute cat ${catId}`;
-    document.body.appendChild(img);
+    // const img = document.createElement("img");
+
+    // // img.id = catId;
+    // img.src = `https://cataas.com/cat/${catId}`;
+    // // img.classList.add("imageFeatures");
+    // img.alt = `cute cat ${catId}`;
+    // document.body.appendChild(img);
 }
 
-// fetch cats, pending how to pass how many as a parameter
+// display joker cat
+function displayJoker(catId) {
+    const img = document.createElement("img");
+
+    img.id = catId;
+    img.src = "assets/Joker-cat.jpg";
+    img.addEventListener('click', () => {
+        displayCat(catId);
+        // img.src = `https://cataas.com/cat/${catId}`;
+        // img.src = "assets/Joker-cat.jpg";
+    });
+    img.classList.add("cuteCat");
+    img.alt = `cute cat ${catId}`;
+    document.body.appendChild(img);
+
+}
+
+// fetch cats, default 4
 function fetchCats(qtty = 4) {
-    const requestURL = `https://cataas.com/api/cats?limit=10`;
+    const requestURL = `https://cataas.com/api/cats?limit=${qtty}`;
     const request = new Request(requestURL);
 
     const response = fetch(request);
@@ -21,7 +47,7 @@ function fetchCats(qtty = 4) {
         .then((response) => response.json())
         .then((data) => {
             data.forEach((cat) => {
-                displayCat(cat._id);
+                displayJoker(cat._id);
                 console.log(cat._id);
             });
         })
@@ -29,5 +55,11 @@ function fetchCats(qtty = 4) {
 }
 
 // main
+// const myForm = document.getElementById('myForm');
+// myForm.addEventListener('submit', (event) => {
+//     event.preventDefault();
+//     const qtty = document.getElementById('qtty').value;
+//     fetchCats(qtty);
+// });
 const myButton = document.getElementById('reload');
-myButton.addEventListener('click', () => fetchCats(10));
+myButton.addEventListener('click', () => fetchCats(8));

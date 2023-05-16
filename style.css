@@ -19,16 +19,14 @@ body {
     font-size: 40px;
 }
 
-
 /* Style the cat image */
-.imageFeatures {
+.cuteCat {
     float: left;
     width:  100px;
     height: 100px;
     object-fit: cover;
     border: 2px solid white;
     padding: 2px;
-
 }
 
 /* Set a style for all buttons */
@@ -36,6 +34,7 @@ button {
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
+    margin: 10px;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
