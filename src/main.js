@@ -3,8 +3,30 @@
 
 // display dead cat in list
 function displayDeadCat(catId) {
-    const catListDiv = document.getElementById("catList");
+    const catListDiv = document.getElementById("catId");
     const img = document.createElement("img");
+}
+
+// remove cat from list
+function removeListCat(catId) {
+    const catListDiv = document.getElementById("catList");
+    const catImg = document.getElementById(catId);
+
+    catListDiv.removeChild(catImg);
+}
+
+// changes list cat to dead cat
+function changeListCat(catId) {
+    const catListDiv = document.getElementById("catList");
+    const catImg = document.getElementById(catId);
+    console.log(catListDiv);
+    console.log(catId);
+    console.log(catImg);
+
+    catImg.src = "./assets/Joker-cat-inactive.jpg";
+    catImg.alt = `dead cat`;
+    catImg.classList.remove("listCat");
+    catImg.classList.add("deadCat");
 }
 
 // display cat
@@ -13,9 +35,11 @@ function displayCat(catId) {
     const catImg = document.createElement("img");
 
     catImg.src = `https://cataas.com/cat/${catId}`;
-    catImg.alt = `cute cat ${catId}`;
+    catImg.alt = `cute cat`;
     catImg.classList.add("shownCat");
     catImgDiv.insertAdjacentElement("afterbegin", catImg);
+
+    changeListCat(catId);
 }
 
 // display joker cat
@@ -25,13 +49,11 @@ function displayJoker(catId) {
 
     img.id = catId;
     img.src = "./assets/Joker-cat.jpg";
-    img.addEventListener('click', () => {
-        displayCat(catId);
-    });
+    img.addEventListener('click',
+        () => displayCat(catId),{once: true});
     img.classList.add("listCat");
-    img.alt = `cute cat ${catId}`;
+    img.alt = `joker cat`;
     catListDiv.appendChild(img);
-
 }
 
 async function fetchOneCat() {

@@ -29,6 +29,16 @@ body {
     padding: 2px;
 }
 
+.deadCat {
+    float: left;
+    width:  100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid white;
+    padding: 2px;
+    opacity: 0.4;
+}
+
 /* Style the cat shown image */
 .shownCat {
     float: left;
