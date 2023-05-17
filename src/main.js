@@ -27,8 +27,6 @@ function displayJoker(catId) {
     img.src = "./assets/Joker-cat.jpg";
     img.addEventListener('click', () => {
         displayCat(catId);
-        // img.src = `https://cataas.com/cat/${catId}`;
-        // img.src = "assets/Joker-cat.jpg";
     });
     img.classList.add("listCat");
     img.alt = `cute cat ${catId}`;
@@ -36,21 +34,25 @@ function displayJoker(catId) {
 
 }
 
+async function fetchOneCat() {
+    return (await fetch("https://cataas.com/cat?json=true"))
+    .json()
+    .then((data) => {
+        console.log(data._id); 
+        catList.push(data._id);
+        displayJoker(data._id);
+        return data._id;
+    });
+}
+
 // fetch cats, default 4
 function fetchCats(qtty = 4) {
-    const requestURL = `https://cataas.com/api/cats?limit=${qtty}`;
-    const request = new Request(requestURL);
+    let counter = 0;
 
-    const response = fetch(request);
-    response
-        .then((response) => response.json())
-        .then((data) => {
-            data.forEach((cat) => {
-                displayJoker(cat._id);
-                console.log(cat._id);
-            });
-        })
-        .catch((error) => console.log(error));
+    while (counter < qtty) {
+        fetchOneCat();
+        counter++;
+    }
 }
 
 // main
@@ -60,5 +62,8 @@ function fetchCats(qtty = 4) {
 //     const qtty = document.getElementById('qtty').value;
 //     fetchCats(qtty);
 // });
+
+let catList = [];
 const myButton = document.getElementById('reload');
 myButton.addEventListener('click', () => fetchCats(8));
+
