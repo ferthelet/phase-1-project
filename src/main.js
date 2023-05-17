@@ -50,7 +50,7 @@ function displayJoker(catId) {
     img.id = catId;
     img.src = "./assets/Joker-cat.jpg";
     img.addEventListener('click',
-        () => displayCat(catId),{once: true});
+        () => displayCat(catId), { once: true });
     img.classList.add("listCat");
     img.alt = `joker cat`;
     catListDiv.appendChild(img);
@@ -58,13 +58,13 @@ function displayJoker(catId) {
 
 async function fetchOneCat() {
     return (await fetch("https://cataas.com/cat?json=true"))
-    .json()
-    .then((data) => {
-        console.log(data._id); 
-        catList.push(data._id);
-        displayJoker(data._id);
-        return data._id;
-    });
+        .json()
+        .then((data) => {
+            console.log(data._id);
+            catList.push(data._id);
+            displayJoker(data._id);
+            return data._id;
+        });
 }
 
 // fetch cats, default 4
@@ -78,14 +78,32 @@ function fetchCats(qtty = 4) {
 }
 
 // main
-// const myForm = document.getElementById('myForm');
-// myForm.addEventListener('submit', (event) => {
-//     event.preventDefault();
-//     const qtty = document.getElementById('qtty').value;
-//     fetchCats(qtty);
-// });
-
 let catList = [];
-const myButton = document.getElementById('reload');
-myButton.addEventListener('click', () => fetchCats(8));
+
+// waits for DOM to load before adding event listener
+document.addEventListener('DOMContentLoaded', () => addingEventListener());
+
+// adds event listener to form
+function addingEventListener() {
+    document.getElementById("difficulty_form").addEventListener("submit", handleFormSubmit);
+}
+
+// handles form submit
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const easy = document.getElementById("easy");
+    const medium = document.getElementById("medium");
+    const hard = document.getElementById("hard");
+
+    if(easy.checked){
+       fetchCats(5);
+    }
+    if(medium.checked){
+       fetchCats(8);
+    }
+    if(hard.checked){
+       fetchCats(12);
+    }
+}
+
 
