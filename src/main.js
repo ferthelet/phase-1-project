@@ -90,7 +90,7 @@ async function fetchOneCat() {
     const data = await fetch("https://cataas.com/cat?json=true");
     const cat = await data.json();
     catList.push(cat._id);
-    displayJoker(cat._id);
+    // displayJoker(cat._id);
     return cat._id;
 }
 
@@ -104,7 +104,14 @@ function displayJokersList() {
 function fetchCats(qtty = 1) {
 
     for (let i = 0; i < qtty; i++) {
-        const cat = fetchOneCat().then(catId => console.log(catId));
+        const cat = fetchOneCat()
+            .then(catId => {
+                console.log(catId);
+                if (i === qtty - 1) {   // if last cat
+                    catList.forEach((catId) => catList.push(catId + "-"));
+                    displayJokersList();
+                };
+            });
     }
 }
 
