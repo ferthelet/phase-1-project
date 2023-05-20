@@ -56,11 +56,18 @@ function displayJoker(catId) {
     catListDiv.appendChild(img);
 }
 
+// "unsort" cat list
+function sortCatList() {
+    catList.sort();
+}
+
+
+// fetch one cat
 async function fetchOneCat() {
     return (await fetch("https://cataas.com/cat?json=true"))
         .json()
         .then((data) => {
-            console.log(data._id);
+            console.log(data._id + "-");
             catList.push(data._id);
             displayJoker(data._id);
             return data._id;
@@ -75,6 +82,7 @@ function fetchCats(qtty = 4) {
         fetchOneCat();
         counter++;
     }
+    console.log(catList);
 }
 
 // main
@@ -95,8 +103,14 @@ function handleFormSubmit(event) {
     const medium = document.getElementById("medium");
     const hard = document.getElementById("hard");
 
+    // clear web page to start
+    document.getElementById("catImg").innerHTML = "";
+    document.getElementById("catList").innerHTML = "";
+    catList = [];
+
+
     if(easy.checked){
-       fetchCats(5);
+       fetchCats(6);
     }
     if(medium.checked){
        fetchCats(8);
