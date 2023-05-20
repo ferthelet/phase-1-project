@@ -24,7 +24,7 @@ function changeListCat(catId) {
     console.log(catImg);
 
     catImg.src = "./assets/Joker-cat-inactive.jpg";
-    catImg.alt = `dead cat`;
+    catImg.alt = `${catId}`;
     catImg.classList.remove("listCat");
     catImg.classList.add("deadCat");
 }
@@ -33,13 +33,29 @@ function changeListCat(catId) {
 function displayCat(catId) {
     const catImgDiv = document.getElementById("catImg");
     const catImg = document.createElement("img");
-
-    catImg.src = `https://cataas.com/cat/${catId}`;
-    catImg.alt = `cute cat`;
+   
+    catImg.src = `https://cataas.com/cat/${catId.substring(0, 16)}`; // 15 is the length of catId
+    catImg.alt = `${catId}`;
     catImg.classList.add("shownCat");
     catImgDiv.insertAdjacentElement("afterbegin", catImg);
 
     changeListCat(catId);
+}
+
+// randomize catList
+function randomizeCatList() {
+    let currentIndex = catList.length;
+    let temporaryValue;
+    let randomIndex;
+    
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = catList[currentIndex];
+        catList[currentIndex] = catList[randomIndex];
+        catList[randomIndex] = temporaryValue;
+    }
 }
 
 // display joker cat
@@ -52,37 +68,37 @@ function displayJoker(catId) {
     img.addEventListener('click',
         () => displayCat(catId), { once: true });
     img.classList.add("listCat");
-    img.alt = `joker cat`;
+    img.alt = `${catId}`;
     catListDiv.appendChild(img);
 }
-
-// "unsort" cat list
-function sortCatList() {
-    catList.sort();
-}
-
 
 // fetch one cat
 async function fetchOneCat() {
     return (await fetch("https://cataas.com/cat?json=true"))
         .json()
         .then((data) => {
-            console.log(data._id + "-");
             catList.push(data._id);
             displayJoker(data._id);
+            catList.push(data._id + "-");
+            displayJoker(data._id + "-");
             return data._id;
         });
 }
 
-// fetch cats, default 4
-function fetchCats(qtty = 4) {
+// display jokers list
+function displayJokersList() {
+    randomizeCatList();
+    catList.forEach((catId) => displayJoker(catId));
+}
+
+// fetch cats
+async function fetchCats(qtty = 1) {
     let counter = 0;
 
     while (counter < qtty) {
         fetchOneCat();
         counter++;
     }
-    console.log(catList);
 }
 
 // main
