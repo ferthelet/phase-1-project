@@ -1,26 +1,88 @@
+/* normalizing css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header-banner-div {
+    width: 100%;
+    min-height: 100px;
+    background-color: lightgray;
+    text-align: center;
+    line-height: 100px;
+    margin-bottom: 10px;
+}
+
+#main-div {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#sidebar-div {
+    width: 20%;
+    min-height: 400px;
+    background-color: lightgray;
+    float: left;
+    text-align: center;
+    line-height: 400px;
+}
+
+#body-div {
+    width: 79%;
+    min-height: 400px;
+    background-color: gray;
+    float: right;
+    text-align: center;
+    line-height: 400px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: block;
+    /* table? */
+}
+
+#footer-div {
+    width: 100%;
+    min-height: 50px;
+    background-color: lightgray;
+    text-align: center;
+    line-height: 50px;
+    margin-top: 10px;
+}
+
+#wrapper-div {
+    width: 80%;
+    margin: auto;
+}
+
 /* Style the header */
-.header {
+/* .header {
     padding: 10px;
     text-align: center;
     background: #1abc9c;
     color: white;
 }
+ */
 
-body {
-    font: 1rem 'Fira Sans', sans-serif;
-    margin: 0;
-    background-color: lightsteelblue;
-}
+
+
+/* body {
+    background-color: lightgrey;
+} */
 
 /* Increase the font size of the h1 element */
-.header h1 {
+/* .header h1 {
     font: 1rem 'Fira Sans', sans-serif;
     font-size: 40px;
-}
+} */
 
 /* Style the cat list images */
 .listCat {
-    float: left;
+    /* float: left; */
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -28,8 +90,9 @@ body {
     padding: 2px;
 }
 
+/* Style the cat dead images */
 .deadCat {
-    float: left;
+    /* float: left; */
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -40,7 +103,7 @@ body {
 
 /* Style the cat shown image */
 .shownCat {
-    float: left;
+    /* float: left; */
     width: 300px;
     height: 300px;
     object-fit: cover;
@@ -62,11 +125,7 @@ button {
     font-size: 16px;
 }
 
-p,
-label {
-    font: 1rem 'Fira Sans', sans-serif;
-}
 
-input {
+/* input {
     margin: 0.4rem;
-}
+} */
