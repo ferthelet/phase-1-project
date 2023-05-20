@@ -7,15 +7,6 @@ function displayDeadCat(catId) {
     const img = document.createElement("img");
 }
 
-// remove cat from list :: TODO :: check if this is needed
-// function removeListCat(catId) {
-//     const catListDiv = document.getElementById("catList");
-//     const catImg = document.getElementById(catId);
-//     debugger;
-
-//     catListDiv.removeChild(catImg);
-// }
-
 // changes list cat to dead cat
 function changeListCat(catId) {
     const catListDiv = document.getElementById("catList");
@@ -40,32 +31,29 @@ function displayCat(catId) {
     catImg.classList.add("shownCat");
     catImgDiv.insertAdjacentElement("afterbegin", catImg);
 
-    changeListCat(catId);
-}
-
-// replace catId in catList with random catId array
-function replaceCatId() {
-    const catListClass = document.getElementsByClassName("listCat");
-
-    for (let i = 0; i < catListClass.length; i++) {
-        catListClass[i].id = catList[i];
-        debugger;
+    //score
+    if (catId.substring(0, 16) === lastCatId.substring(0, 16)) { // removes the "-" from duplicates catId
+        score += 1;
+        document.getElementById("score").innerHTML = score;
     }
+    lastCatId = catId;
+
+    changeListCat(catId);
 }
 
 // randomize jokers in catList
 function randomizeCatList() {
     let currentIndex = catList.length;
-    let temporaryValue;
+    let temp;
     let randomIndex;
 
     while (0 !== currentIndex) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
 
-        temporaryValue = catList[currentIndex];
+        temp = catList[currentIndex];
         catList[currentIndex] = catList[randomIndex];
-        catList[randomIndex] = temporaryValue;
+        catList[randomIndex] = temp;
     }
 }
 
@@ -81,8 +69,6 @@ function displayJoker(catId) {
     img.classList.add("listCat");
     img.alt = "joker cat";
     catListDiv.appendChild(img);
-    // randomizeCatList();
-    // replaceCatId();
 }
 
 // fetch one cat
@@ -90,7 +76,6 @@ async function fetchOneCat() {
     const data = await fetch("https://cataas.com/cat?json=true");
     const cat = await data.json();
     catList.push(cat._id);
-    // displayJoker(cat._id);
     return cat._id;
 }
 
@@ -108,7 +93,7 @@ function fetchCats(qtty = 1) {
             .then(catId => {
                 console.log(catId);
                 if (i === qtty - 1) {   // if last cat
-                    catList.forEach((catId) => catList.push(catId + "-"));
+                    catList.forEach((catId) => catList.push(catId + "-")); // pushes duplicates to catList
                     displayJokersList();
                 };
             });
@@ -117,6 +102,12 @@ function fetchCats(qtty = 1) {
 
 // main
 let catList = [];
+let lastCatId = "";
+let score = 0;
+// game difficulty
+const EASY = 3;
+const MEDIUM = 6;
+const HARD = 10;
 
 // waits for DOM to load before adding event listener
 document.addEventListener('DOMContentLoaded', () => addingEventListener());
@@ -134,19 +125,21 @@ function handleFormSubmit(event) {
     const hard = document.getElementById("hard");
 
     // clear web page to start
+    catList = [];
+    score = 0;
     document.getElementById("catImg").innerHTML = "";
     document.getElementById("catList").innerHTML = "";
-    catList = [];
+     document.getElementById("score").innerHTML = score;
 
 
     if (easy.checked) {
-        fetchCats(6);
+        fetchCats(EASY);
     }
     if (medium.checked) {
-        fetchCats(8);
+        fetchCats(MEDIUM);
     }
     if (hard.checked) {
-        fetchCats(12);
+        fetchCats(HARD);
     }
 }
 
